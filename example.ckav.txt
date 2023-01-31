@@ -1,9 +1,11 @@
+text/ckav; charset=UTF-8
+
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
 * ;"Reserved character for system (CKAV) line definitions." ;"use quoted * if you want to use it as data type specifier."
 * ;"WARNING" ;"Graph created by type definition relations must not create any cycles."
-* ;"NOTE" ;"First 2 lines of the file must describe separator-char and quote-char as it is done in this file."
+* ;"NOTE" ;"First 2 non-blank lines of the file afer the type specifier (MIME) must describe separator-char and quote-char as it is done in this file."
 * ;"NOTE" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
 
 typedef ;type.id ;value-type.1 ;"value-type.2" ;...
