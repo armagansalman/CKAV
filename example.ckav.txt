@@ -1,26 +1,26 @@
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-* ;"Reserved character for system reserved line definitions." ;"use quoted * if you want to use it as data type specifier."
-* ;"WARNING" ;"type definitions must not create any cycles."
+* ;"Reserved character for system (CKAV) line definitions." ;"use quoted * if you want to use it as data type specifier."
+* ;"WARNING" ;"Graph created by type definition relations must not create any cycles."
 * ;"NOTE" ;"First 2 lines of the file must describe separator-char and quote-char as it is done in this file."
 * ;"NOTE" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
 
 typedef ;type.id ;value-type.1 ;"value-type.2" ;...
 
 typedef ;T."*" ;"str.utf-8"
-typedescribe ;T."*" ; "WHAT = Example for how * can be used by users." ; "VALUES = utf-8 encoded string."
+typedescribe ;T."*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definitions." ; "VALUES = utf-8 encoded string."
 
 typedef ;TR.uid ;"Unique ID value" ;...
 typedescribe ;TR.uid ;"WHAT = A line with Type and ID. This ID value can be used in other data." ; "VALUES = unique ID, other datas."
 
-typedef ;T.1 ;"non-zero integer" ;"non-zero integer" ;"non-zero integer"
+typedef ;T.1 ;"non-negative integer" ;"non-negative integer" ;"non-negative integer"
 typedescribe ; T.1 ;"3D point x,y,z values."
 
-typedef ;T.2 ;"non-zero integer" ;"non-zero integer" ;"non-zero integer" ;"non-zero integer"
+typedef ;T.2 ;"non-negative integer" ;"non-negative integer" ;"non-negative integer" ;"non-negative integer"
 typedescribe ; T.2 ;"WHAT = 3D point." ;"VALUES = point id, x, y, z values."
 
-typedef ;TR.1 ;"non-zero integer (unique ID)" ;"float (x)" ;"float (y)"
+typedef ;TR.1 ;"non-negative integer (unique ID)" ;"float (x)" ;"float (y)"
 typedescribe ;TR.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value."
 
 T."*" ; "Example star type usage"
