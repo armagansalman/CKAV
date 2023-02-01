@@ -4,7 +4,7 @@ SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
 (* ;"version" ;"0.1.4")
-(* ;"version-date" ;"2023-02-01T10:16+00")
+(* ;"version-date" ;"2023-02-01T10:47+00")
 
 (* ;"A data has multiple elements. The first element always denotes the type of the data."
 	;"A data is always between ( and ) characters.")
@@ -78,14 +78,14 @@ QUOTE-CHAR = '"'
 	;"Reserved characters or char sequences can be used if they are quoted."
 	;"User types don't have to start with T.")
 
-(typedef ;"*" ;"t.str.utf-8")
+(typedef ;"*" ;t.num.complex)
 (typedescribe ;"*" ; "WHAT = Example for how * can be defined as a type by users."
 						;"It must be quoted for user definitions."
-					;"VALUES = utf-8 encoded string.")
+					;"VALUES = complex number")
 
-(typedef ;TID.uid ;"Unique ID value" ;...)
-(typedescribe ;TID.uid ;"WHAT = A line with Type and ID."
-						;This ID value can be used in other data."
+(typedef ;TID... ;"Unique ID value" ;...)
+(typedescribe ;TID... ;"WHAT = A line with Type and ID."
+						;This ID value can be used in other data in different TID types."
 						;"VALUES = unique ID, other datas.")
 
 (typedef ;T.1 ;t.num.whole ;t.num.whole ;t.num.whole)
@@ -97,16 +97,24 @@ QUOTE-CHAR = '"'
 (typedef ;TID.1 ;"t.num.whole.{v.uniq}" ;"t.num.real" ;t.num.real)
 (typedescribe ;TID.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value.")
 
-typedef ;TID.2 ;str.utf-8 ;int.non-neg ;int.non-pos; int.ZERO
+(typedef ;TID.2 ;str.utf-8 ;t.num.int.{non-neg} ;t.num.int.{non-pos}; t.num.zero)
 
-TID.2 ;"str ID example 1" ;1 ; -1 ;0
-TID.2 ;"str ID example 2" ;5 ; -29 ;0
+(typedef ;TID."spaced type example" ;t.num.whole.{v.uniq} ;t.num.ratio)
 
-"*" ; "Example star type usage"
-T.1 ;3 ; 4; 5
-T.2 ;0 ;3 ; 4; 5
+(TID."spaced type example" ;3 ; "22/7")
 
-TID.1 ;0 ;1 ; 1
-TID.1 ;1 ;3 ; 3
-TID.1 ;2 ;2 ; 5
-TID.1 ;3 ;0 ; 8
+(TID.2 ;"str ID example 1" ;1 ; -1 ;0)
+(TID.2 ;"str ID example 2" ;5 ; -29 ;0)
+
+(* ;"COMMENT" ; "Example usage of user defined * type:")
+("*" ; "3+4i")
+
+(T.1 ;3 ; 4; 5)
+(T.2 ;0 ;3 ; 4; 5)
+
+(* ;"COMMENT" ; )
+
+(TID.1 ;0 ;1 ; 1)
+(TID.1 ;1 ;3 ; 3)
+(TID.1 ;2 ;2 ; 5)
+(TID.1 ;3 ;0 ; 8)
