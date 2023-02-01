@@ -4,7 +4,7 @@ SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
 (* ;"version" ;"0.1.2")
-(* ;"version-date" ;"2023-02-01T09:26")
+(* ;"version-date" ;"2023-02-01T09:26+00")
 
 (* ;"A data has multiple elements. The first element always denotes the type of the data."
 	;"A data is always between ( and ) characters.")
