@@ -3,55 +3,42 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(* ;"version" ;"0.1.4")
-(* ;"version-date" ;"2023-02-01T10:47+00")
+(? ;"version" ;"0.1.6")
+(? ;"version-date" ;"2023-02-01T11:14+00")
 
-(* ;"A data has multiple elements. The first element always denotes the type of the data."
-	;"A data is always between ( and ) characters.")
-(* ;"An element is always either a simple type defined by CKAV or it is a data reference.")
-(* ;"* = Untyped data type. Can put any element in data with or without type.")
+(? ;"A t.data has multiple elements. The first element always denotes the type of the t.data."
+	;"A t.data is always between ( and ) characters.")
+(? ;"An element is always either of a simple type defined by CKAV or it is a t.data reference.")
 
-(* ;"System (CKAV) reserved types, strings always start with *"
-	;" Quote your type, string if it begins with * ")
+
+(? ;"System (CKAV) reserved types and strings always start with ?"
+	;" Quote your type and string if they begin with ? ")
 	
-(* ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data format (https://www.ietf.org/rfc/rfc4180.txt)." )
-(* ;"* = reserved character for system (CKAV) type definitions."
-	;"Quote your type if your type begins with *")
-(* ;"WARNING" ;"Graph created by type definition relations must not create any cycles.")
-(* ;"NOTE" ;"First 2 non-blank lines of the file afer the type specifier (MIME) must describe separator-char and quote-char as it is done in this file.")
-(* ;" 'typedef' template" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ...")
-(* ;" 'typedescribe' template" ;"typedescribe ; UNIQUE TYPE ID ; Explaining data types for humans.")
-(* ;"Types that start with TID must have a unique ID."
-	;"For example, TID.5 type data must have unique ID's for every data with type TID.5"
-	;"Other TID. types can have the same ID values from datas of type TID.5")
-
-(* ;"TODO" ;"Define reference system (types...)"
-	;"Maybe */ is a good choice for reference type."
-	;"Use uri to locate files."
-	;"Way to denote referenced type."
-	;"Way to refer to data in referrred file.")
-
-(* ;"TODO" ;"Use proper data types for examples in this file.")
-
-(* ;"TODO" ;"Create a system for (type) aliasing."
-	;"typedef already provides this mechanism?")
-
-(* ;"TODO" ;"Type property specification."
-			;"After choosing a relation of values (a type), a mechanism
-			is needed to denote their extra properties."
-			;"t.num.whole.{v.uniq} seems ok."
-			;"Check RUST Language for inspiration")
-
-
-(* ;"Operations defined by CKAV:"
-	;" *op... = operation on data. "
-	;" *op.num.rt.{deg=X} = Xth degree root operation. Accepts one t.num "
-	;" (*op.num.rt.{deg=2} ; 4) == 2 "
-	;" *op.num.sqrt = *op.num.rt.{deg=2} "
-	;" (*op.num.sqrt ; 4) == 2 "
+(? ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data format (https://www.ietf.org/rfc/rfc4180.txt)." )
+(? ;"? = reserved character for system (CKAV) type definitions."
+	;"Quote your type if your type begins with ?"
+)
+(? ;"WARNING" ;"Graph created by type definition relations must not create any cycles.")
+(? ;"NOTE" ;"First 2 non-blank lines of the file afer the type specifier (MIME)"
+	;"must describe separator-char and quote-char as it is done in this file.")
+(? ;" 'typedef' template" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ...")
+(? ;" 'typedescribe' template" ;"typedescribe ; UNIQUE TYPE ID ; Explaining data types for humans.")
+(? ;"Data that start with TID must have a unique ID."
+	;"For example, all TID.5 data must have IDs unique among themselves."
+	;"TID.6 data can use ID values of TID.5 type data as long as no TID.6 type data ID is the same in TID.6"
 )
 
-(* ;"Value Types defined by CKAV:"
+
+(? ;"Operations defined by CKAV:"
+	;" ?op... = operation on data. "
+	;" ?op.num.rt.{deg=X} = Xth degree root operation. Accepts one t.num "
+	;" (?op.num.rt.{deg=2} ; 4) == 2 "
+	;" ?op.num.sqrt = ?op.num.rt.{deg=2} "
+	;" (?op.num.sqrt ; 4) == 2 "
+)
+
+(? ;"Definitions by CKAV:"
+	;" t.data = CKAV data. Enclosed with ( ) "
 	;" t.num = Any kind of number "
 	;" t.num.zero = The number 0 "
 	;" t.num.nat = Counting numbers starting from 1 (0 excluded) "
@@ -67,54 +54,109 @@ QUOTE-CHAR = '"'
 	
 	;" t.str = Any kind of character sequence. "
 	;" t.str.utf-8 = utf-8 encoded character sequence. "
-	;" v.uniq = unique value"
+	
+	;" prop.uniq = unique value "
+	;" prop.non-neg = non negative value "
+	;" prop.non-pos = non positive value "
 	;""
 )
 
 
-(* ;"Examples of type definitions, example data... can be found below.")
+(? ;"Examples of type definitions, example data... can be found below.")
 
-(* ;"User defined type identifiers can be anything except CKAV reserved ones."
+(? ;"User defined type identifiers can be anything except CKAV reserved ones."
 	;"Reserved characters or char sequences can be used if they are quoted."
-	;"User types don't have to start with T.")
+	;"User types don't have to start with T."
+)
 
-(typedef ;"*" ;t.num.complex)
-(typedescribe ;"*" ; "WHAT = Example for how * can be defined as a type by users."
-						;"It must be quoted for user definitions."
-					;"VALUES = complex number")
+(typedef ;"?" ;t.num.complex)
+(typedescribe ;"?" 
+	;"WHAT = Example for how ? can be defined as a type by users."
+		;"It must be quoted for user definitions."
+	;"VALUES = complex number"
+)
+("?" ; "3+4i")
+
 
 (typedef ;TID... ;"Unique ID value" ;...)
-(typedescribe ;TID... ;"WHAT = A line with Type and ID."
-						;This ID value can be used in other data in different TID types."
-						;"VALUES = unique ID, other datas.")
+(typedescribe ;TID... 
+	;"WHAT = A t.data with Type and ID."
+		;This ID value can be used in other data in different TID types."
+	;"VALUES = unique ID, other datas."
+)
 
-(typedef ;T.1 ;t.num.whole ;t.num.whole ;t.num.whole)
+(typedef ;T.1 
+	;t.num.whole 
+	;t.num.whole 
+	;t.num.whole
+)
 (typedescribe ; T.1 ;"3D point x,y,z values.")
 
-(typedef ;T.2 ;t.num.whole ;t.num.whole ;t.num.whole ;t.num.whole)
-(typedescribe ; T.2 ;"WHAT = id and 3D point." ;"VALUES = point id, x, y, z values.")
+(typedef ;T.2 
+	;t.num.whole 
+	;t.num.whole 
+	;t.num.whole 
+	;t.num.whole
+)
+(typedescribe ; T.2 
+	;"WHAT = id and 3D point." 
+	;"VALUES = point id, x, y, z values."
+)
 
-(typedef ;TID.1 ;"t.num.whole.{v.uniq}" ;"t.num.real" ;t.num.real)
-(typedescribe ;TID.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value.")
+(typedef ;TID.1 
+	;"t.num.whole.{prop.uniq}" 
+	;"t.num.real" 
+	;t.num.real
+)
+(typedescribe ;TID.1 
+	;"WHAT = A 2D point with ID value." 
+	;"VALUES = Unique ID ;X value ;Y value."
+)
 
-(typedef ;TID.2 ;str.utf-8 ;t.num.int.{non-neg} ;t.num.int.{non-pos}; t.num.zero)
+(typedef ;TID.2 
+	;str.utf-8 
+	;t.num.int.{prop.non-neg} 
+	;t.num.int.{prop.non-pos} 
+	;t.num.zero
+)
 
-(typedef ;TID."spaced type example" ;t.num.whole.{v.uniq} ;t.num.ratio)
+(typedef ;TID."spaced type example" 
+	;t.num.whole.{prop.uniq} 
+	;t.num.ratio
+)
 
 (TID."spaced type example" ;3 ; "22/7")
 
 (TID.2 ;"str ID example 1" ;1 ; -1 ;0)
 (TID.2 ;"str ID example 2" ;5 ; -29 ;0)
 
-(* ;"COMMENT" ; "Example usage of user defined * type:")
-("*" ; "3+4i")
-
 (T.1 ;3 ; 4; 5)
 (T.2 ;0 ;3 ; 4; 5)
 
-(* ;"COMMENT" ; )
+(? ;"COMMENT example")
 
 (TID.1 ;0 ;1 ; 1)
 (TID.1 ;1 ;3 ; 3)
 (TID.1 ;2 ;2 ; 5)
 (TID.1 ;3 ;0 ; 8)
+
+
+(? ;"TODO" ;"Define reference system (types...)"
+	;"Maybe ?/ is a good choice for reference type."
+	;"Use uri to locate files."
+	;"Way to denote referenced type."
+	;"Way to refer to data in referrred file."
+)
+
+(? ;"TODO" ;"Use proper data types for examples in this file.")
+
+(? ;"TODO" ;"Create a system for (type) aliasing."
+	;"typedef already provides this mechanism?"
+)
+
+(? ;"TODO" ;"Type property specification."
+			;"After choosing a relation of values (a type), a mechanism
+			is needed to denote their extra properties."
+			;"t.num.whole.{prop.uniq} seems ok."
+			;"Check RUST Language for inspiration"
+)
