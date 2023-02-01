@@ -1,10 +1,10 @@
-text*ckav; charset=UTF-8
+text/ckav; charset=UTF-8
 
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(* ;"version = 0.1")
-(* ;"version-date = 2023-02-01")
+(* ;"version" ;"0.1.2")
+(* ;"version-date" ;"2023-02-01T09:26")
 
 (* ;"A data has multiple elements. The first element always denotes the type of the data."
 	;"A data is always between ( and ) characters.")
@@ -23,19 +23,32 @@ QUOTE-CHAR = '"'
 	;"For example, TID.5 type data must have unique ID's for every data with type TID.5"
 	;"Other TID. types can have the same ID values from datas of type TID.5")
 
+(* ;"TODO" ;"Define reference system."
+	;"Maybe */ is a good choice for reference type."
+	;"Use uri to locate files."
+	;"Way to denote referenced type."
+	;"Way to refer to data in referrred file.")
+
+(* ;"TODO" ;"Define reference system."
+	;"Use proper data types for examples in this file.")
 
 (* ;"Value Types defined by CKAV:"
-	;"num = Any kind of number"
-	;"num.nat = Counting numbers starting from 1 (0 excluded)"
-	;"num.prime = A prime number"
-	;"num.comp = A composite number"
-	;"num.whole = Set of num.nat joined with number 0"
-	;"int = integer"
-	;"int.ZERO = 0"
-	;"float = ")
+	;" *num = Any kind of number "
+	;" *num.nat = Counting numbers starting from 1 (0 excluded) "
+	;" *num.prime = A prime number "
+	;" *num.cps = A composite number "
+	;" *num.whole = Set of num.nat joined with number 0 "
+	;" *num.int = *num.whole set adjoined with their negatives. "
+	;"")
 
-(typedef ;T."*" ;"sTID.utf-8")
-(typedescribe ;T."*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definiTIDons." ; "VALUES = utf-8 encoded sTIDing.")
+
+(* ;"Examples of type definitions, example data... can be found below.")
+
+(* ;"Type identifiers can be anything except CKAV reserved ones."
+	;"They don't have to start with T.")
+
+(typedef ;"*" ;"str.utf-8")
+(typedescribe ;"*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definitions." ; "VALUES = utf-8 encoded string.")
 
 (typedef ;TID.uid ;"Unique ID value" ;...)
 typedescribe ;TID.uid ;"WHAT = A line with Type and ID. This ID value can be used in other data." ; "VALUES = unique ID, other datas."
@@ -54,7 +67,7 @@ typedef ;TID.2 ;str.utf-8 ;int.non-neg ;int.non-pos; int.ZERO
 TID.2 ;"str ID example 1" ;1 ; -1 ;0
 TID.2 ;"str ID example 2" ;5 ; -29 ;0
 
-T."*" ; "Example star type usage"
+"*" ; "Example star type usage"
 T.1 ;3 ; 4; 5
 T.2 ;0 ;3 ; 4; 5
 
