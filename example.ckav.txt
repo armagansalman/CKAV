@@ -3,16 +3,18 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(* ;"version" ;"0.1.2")
-(* ;"version-date" ;"2023-02-01T09:26+00")
+(* ;"version" ;"0.1.4")
+(* ;"version-date" ;"2023-02-01T10:16+00")
 
 (* ;"A data has multiple elements. The first element always denotes the type of the data."
 	;"A data is always between ( and ) characters.")
 (* ;"An element is always either a simple type defined by CKAV or it is a data reference.")
 (* ;"* = Untyped data type. Can put any element in data with or without type.")
-(* ;"System (CKAV) reserved types always start with *"
-	;"Quote your type if your type begins with *")
-(* ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data format (https:**www.ietf.org*rfc*rfc4180.txt)." )
+
+(* ;"System (CKAV) reserved types, strings always start with *"
+	;" Quote your type, string if it begins with * ")
+	
+(* ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data format (https://www.ietf.org/rfc/rfc4180.txt)." )
 (* ;"* = reserved character for system (CKAV) type definitions."
 	;"Quote your type if your type begins with *")
 (* ;"WARNING" ;"Graph created by type definition relations must not create any cycles.")
@@ -23,44 +25,77 @@ QUOTE-CHAR = '"'
 	;"For example, TID.5 type data must have unique ID's for every data with type TID.5"
 	;"Other TID. types can have the same ID values from datas of type TID.5")
 
-(* ;"TODO" ;"Define reference system."
+(* ;"TODO" ;"Define reference system (types...)"
 	;"Maybe */ is a good choice for reference type."
 	;"Use uri to locate files."
 	;"Way to denote referenced type."
 	;"Way to refer to data in referrred file.")
 
-(* ;"TODO" ;"Define reference system."
-	;"Use proper data types for examples in this file.")
+(* ;"TODO" ;"Use proper data types for examples in this file.")
+
+(* ;"TODO" ;"Create a system for (type) aliasing."
+	;"typedef already provides this mechanism?")
+
+(* ;"TODO" ;"Type property specification."
+			;"After choosing a relation of values (a type), a mechanism
+			is needed to denote their extra properties."
+			;"t.num.whole.{v.uniq} seems ok."
+			;"Check RUST Language for inspiration")
+
+
+(* ;"Operations defined by CKAV:"
+	;" *op... = operation on data. "
+	;" *op.num.rt.{deg=X} = Xth degree root operation. Accepts one t.num "
+	;" (*op.num.rt.{deg=2} ; 4) == 2 "
+	;" *op.num.sqrt = *op.num.rt.{deg=2} "
+	;" (*op.num.sqrt ; 4) == 2 "
+)
 
 (* ;"Value Types defined by CKAV:"
-	;" *num = Any kind of number "
-	;" *num.nat = Counting numbers starting from 1 (0 excluded) "
-	;" *num.prime = A prime number "
-	;" *num.cps = A composite number "
-	;" *num.whole = Set of num.nat joined with number 0 "
-	;" *num.int = *num.whole set adjoined with their negatives. "
-	;"")
+	;" t.num = Any kind of number "
+	;" t.num.zero = The number 0 "
+	;" t.num.nat = Counting numbers starting from 1 (0 excluded) "
+	;" t.num.prime = A prime number "
+	;" t.num.cpst = A composite number "
+	;" t.num.whole = Set of num.nat joined with t.num.zero "
+	;" t.num.int = t.num.whole set adjoined with their negatives. "
+	;" t.num.ratio = A number which can be written as a fraction. "
+	;" t.num.irrat = A number which can not be written as a fraction. "
+	;" t.num.float = IEEE Standard for Floating-Point Arithmetic (IEEE 754) value "
+	;" t.num.real = t.num.ratio and t.num.irrat sets adjoined. Unlimited version of t.num.float "
+	;" t.num.complex = a+bi where a and b are t.num.real and i = square root of -1 "
+	
+	;" t.str = Any kind of character sequence. "
+	;" t.str.utf-8 = utf-8 encoded character sequence. "
+	;" v.uniq = unique value"
+	;""
+)
 
 
 (* ;"Examples of type definitions, example data... can be found below.")
 
-(* ;"Type identifiers can be anything except CKAV reserved ones."
-	;"They don't have to start with T.")
+(* ;"User defined type identifiers can be anything except CKAV reserved ones."
+	;"Reserved characters or char sequences can be used if they are quoted."
+	;"User types don't have to start with T.")
 
-(typedef ;"*" ;"str.utf-8")
-(typedescribe ;"*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definitions." ; "VALUES = utf-8 encoded string.")
+(typedef ;"*" ;"t.str.utf-8")
+(typedescribe ;"*" ; "WHAT = Example for how * can be defined as a type by users."
+						;"It must be quoted for user definitions."
+					;"VALUES = utf-8 encoded string.")
 
 (typedef ;TID.uid ;"Unique ID value" ;...)
-typedescribe ;TID.uid ;"WHAT = A line with Type and ID. This ID value can be used in other data." ; "VALUES = unique ID, other datas."
+(typedescribe ;TID.uid ;"WHAT = A line with Type and ID."
+						;This ID value can be used in other data."
+						;"VALUES = unique ID, other datas.")
 
-typedef ;T.1 ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer"
-typedescribe ; T.1 ;"3D point x,y,z values."
+(typedef ;T.1 ;t.num.whole ;t.num.whole ;t.num.whole)
+(typedescribe ; T.1 ;"3D point x,y,z values.")
 
-typedef ;T.2 ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer"
-typedescribe ; T.2 ;"WHAT = 3D point." ;"VALUES = point id, x, y, z values."
+(typedef ;T.2 ;t.num.whole ;t.num.whole ;t.num.whole ;t.num.whole)
+(typedescribe ; T.2 ;"WHAT = id and 3D point." ;"VALUES = point id, x, y, z values.")
 
-typedef ;TID.1 ;"non-negaTIDve integer (unique ID)" ;"float (x)" ;"float (y)"
-typedescribe ;TID.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value."
+(typedef ;TID.1 ;"t.num.whole.{v.uniq}" ;"t.num.real" ;t.num.real)
+(typedescribe ;TID.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value.")
 
 typedef ;TID.2 ;str.utf-8 ;int.non-neg ;int.non-pos; int.ZERO
 
