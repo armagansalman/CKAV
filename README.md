@@ -1,4 +1,4 @@
-###### Last update (iso-8601) = 2023-01-31T17:43+00
+###### Last update (iso-8601) = 2023-02-01
 
 # WHAT IS CKAV (Cinsli, Karakter Ayırımlı Veriler)
 ## (In Progress. Not yet complete.)
