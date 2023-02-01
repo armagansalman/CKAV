@@ -1,35 +1,64 @@
-text/ckav; charset=UTF-8
+text*ckav; charset=UTF-8
 
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-* ;"Reserved character for system (CKAV) line definitions." ;"use quoted * if you want to use it as data type specifier."
-* ;"WARNING" ;"Graph created by type definition relations must not create any cycles."
-* ;"NOTE" ;"First 2 non-blank lines of the file afer the type specifier (MIME) must describe separator-char and quote-char as it is done in this file."
-* ;"NOTE" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
+(* ;"version = 0.1")
+(* ;"version-date = 2023-02-01")
 
-typedef ;type.id ;value-type.1 ;"value-type.2" ;...
+(* ;"A data has multiple elements. The first element always denotes the type of the data."
+	;"A data is always between ( and ) characters.")
+(* ;"An element is always either a simple type defined by CKAV or it is a data reference.")
+(* ;"* = Untyped data type. Can put any element in data with or without type.")
+(* ;"System (CKAV) reserved types always start with *"
+	;"Quote your type if your type begins with *")
+(* ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data format (https:**www.ietf.org*rfc*rfc4180.txt)." )
+(* ;"* = reserved character for system (CKAV) type definitions."
+	;"Quote your type if your type begins with *")
+(* ;"WARNING" ;"Graph created by type definition relations must not create any cycles.")
+(* ;"NOTE" ;"First 2 non-blank lines of the file afer the type specifier (MIME) must describe separator-char and quote-char as it is done in this file.")
+(* ;" 'typedef' template" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ...")
+(* ;" 'typedescribe' template" ;"typedescribe ; UNIQUE TYPE ID ; Explaining data types for humans.")
+(* ;"Types that start with TID must have a unique ID."
+	;"For example, TID.5 type data must have unique ID's for every data with type TID.5"
+	;"Other TID. types can have the same ID values from datas of type TID.5")
 
-typedef ;T."*" ;"str.utf-8"
-typedescribe ;T."*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definitions." ; "VALUES = utf-8 encoded string."
 
-typedef ;TR.uid ;"Unique ID value" ;...
-typedescribe ;TR.uid ;"WHAT = A line with Type and ID. This ID value can be used in other data." ; "VALUES = unique ID, other datas."
+(* ;"Value Types defined by CKAV:"
+	;"num = Any kind of number"
+	;"num.nat = Counting numbers starting from 1 (0 excluded)"
+	;"num.prime = A prime number"
+	;"num.comp = A composite number"
+	;"num.whole = Set of num.nat joined with number 0"
+	;"int = integer"
+	;"int.ZERO = 0"
+	;"float = ")
 
-typedef ;T.1 ;"non-negative integer" ;"non-negative integer" ;"non-negative integer"
+(typedef ;T."*" ;"sTID.utf-8")
+(typedescribe ;T."*" ; "WHAT = Example for how * can be used by users. It must be quoted for user definiTIDons." ; "VALUES = utf-8 encoded sTIDing.")
+
+(typedef ;TID.uid ;"Unique ID value" ;...)
+typedescribe ;TID.uid ;"WHAT = A line with Type and ID. This ID value can be used in other data." ; "VALUES = unique ID, other datas."
+
+typedef ;T.1 ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer"
 typedescribe ; T.1 ;"3D point x,y,z values."
 
-typedef ;T.2 ;"non-negative integer" ;"non-negative integer" ;"non-negative integer" ;"non-negative integer"
+typedef ;T.2 ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer" ;"non-negaTIDve integer"
 typedescribe ; T.2 ;"WHAT = 3D point." ;"VALUES = point id, x, y, z values."
 
-typedef ;TR.1 ;"non-negative integer (unique ID)" ;"float (x)" ;"float (y)"
-typedescribe ;TR.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value."
+typedef ;TID.1 ;"non-negaTIDve integer (unique ID)" ;"float (x)" ;"float (y)"
+typedescribe ;TID.1 ;"WHAT = A 2D point with ID value." ;"VALUES = Unique ID ;X value ;Y value."
+
+typedef ;TID.2 ;str.utf-8 ;int.non-neg ;int.non-pos; int.ZERO
+
+TID.2 ;"str ID example 1" ;1 ; -1 ;0
+TID.2 ;"str ID example 2" ;5 ; -29 ;0
 
 T."*" ; "Example star type usage"
 T.1 ;3 ; 4; 5
 T.2 ;0 ;3 ; 4; 5
 
-TR.1 ;0 ;1 ; 1
-TR.1 ;1 ;3 ; 3
-TR.1 ;2 ;2 ; 5
-TR.1 ;3 ;0 ; 8
+TID.1 ;0 ;1 ; 1
+TID.1 ;1 ;3 ; 3
+TID.1 ;2 ;2 ; 5
+TID.1 ;3 ;0 ; 8
