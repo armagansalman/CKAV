@@ -3,8 +3,8 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(? ;"version" ;"0.1.6")
-(? ;"version-date" ;"2023-02-01T11:14+00")
+(? ;"version" ;"0.1.7")
+(? ;"version-date" ;"2023-02-02T11+00")
 
 (? ;"A t.data has multiple elements. The first element always denotes "
 	;"the type of the t.data."
