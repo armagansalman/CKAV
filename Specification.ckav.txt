@@ -63,6 +63,7 @@ QUOTE-CHAR = '"'
 
 (? ;"Definitions by CKAV (reserved types):"
 	;" t.bottom = Has no values. Sub-type of all other types. "
+	;" t.any = Any type except t.bottom "
 	;" t.top = Super-type of all other types. "
 	
 	;" t.data = CKAV data. Enclosed with ( )"
