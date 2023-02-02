@@ -62,7 +62,11 @@ QUOTE-CHAR = '"'
 
 
 (? ;"Definitions by CKAV (reserved types):"
-	;" t.data = CKAV data. Enclosed with ( ) "
+	;" t.bottom = Has no values. Sub-type of all other types. "
+	;" t.top = Super-type of all other types. "
+	
+	;" t.data = CKAV data. Enclosed with ( )"
+	
 	;" t.num = Any kind of number "
 	;" t.num.zero = The number 0 "
 	;" t.num.nat = Counting numbers starting from 1 (0 excluded) "
@@ -141,7 +145,7 @@ QUOTE-CHAR = '"'
 )
 
 (typedef ;TID.2 
-	;str.utf-8 
+	;str.utf-8.{prop.uniq}
 	;t.num.int.{prop.non-neg} 
 	;t.num.int.{prop.non-pos} 
 	;t.num.zero
