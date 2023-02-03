@@ -1,12 +1,11 @@
 # WHAT IS CKAV (Cinsli, Karakter Ayırımlı Veriler) (Typed, Character Separated Values)
-## (In Progress. Not yet complete.)
+## (In Progress. Not yet stable.)
 
-* CKAV is a text based data format (inspired by csv) which adds explicit data type 
-declarations to all data.
+* CKAV is a text based, statically typed data format (inspired by csv).
 
-* It also lets users to optionally add unique ids to data for creating
-relations between data.
+* It also lets users to optionally add unique ids to data to create
+relationships between data.
 
 ---
 
-###### Last update of this document (iso-8601) = 2023-02-02T11+00
+###### Last update of this document (iso-8601) = 2023-02-03T06:57+00
