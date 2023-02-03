@@ -3,33 +3,56 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(? ;"version" ;"0.1.7")
-(? ;"version-date" ;"2023-02-02T11+00")
+(? ;"version" ;"(0.2.3 ;2023-02-03T08:13+00)")
 
-(? ;"A t.data has multiple elements. The first element always denotes "
-	;"the type of the t.data."
-	;"A t.data is always between ( and ) characters."
+(? ;"? is a system reserved character."
+	;"Users who want to start their typedef, reference, string etc. must"
+	;"quote the string that starts with ? character."
+	;"Any typedef, reference, string... that starts with ? is defined"
+	;"in CKAV specification."
 )
 
-(? ;"An element is always either of a simple type defined by CKAV or it "
-	;"is a t.data reference."
+(? ;"First data element of every ?.t.data (X) that starts with TID"
+	;"must have a ID field defined which is unique in X."
+	
+	;"For example, all TID.5 data must have IDs unique among themselves."
+	;"TID.6 data can use ID values of TID.5 type data as long as no "
+	;"TID.6 type data ID is the same in TID.6"
 )
 
+(? ;"A ?.t.data has multiple elements. The first element always denotes "
+	;"the type of the ?.t.data"
+	;"A ?.t.data is always between ( and ) characters."
+)
+
+(? ;"An ?.t.data element is always either"
+	;"a simple type defined by CKAV"
+	;"or it is a ?.t.data value."
+	
+	;"The first data element of every ?.t.data"
+	;"always denotes the type of that ?.t.data"
+)
 
 (? ;"System (CKAV) reserved types and strings always start with ?"
 	;" Quote your type and string if they begin with ? "
 )
-	
+
 (? ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data "
-	;"format (https://www.ietf.org/rfc/rfc4180.txt)."
+	;"format (https://www.ietf.org/rfc/rfc4180.txt)"
 )
 
-(? ;"? = reserved character for system (CKAV) type definitions."
-	;"Quote your type if your type begins with ?"
+(? ;"WARNING" ;"Graph created by type definitions"
+	;"must not create any cycles."
+	
+	;"For example, the following is forbidden:"
+	;"typedef ; type.1; type.2 ; ?.t.num.int"
+	;"typedef ; type.2; type.1 ; ?.t.num.real"
 )
 
-(? ;"WARNING" ;"Graph created by type definition relations must not "
-	;"create any cycles."
+(? ;"DEFINITION"
+	;" := operator is alias operator "
+	;" It takes two positional arguments. First is a ?.t.str"
+	;" second is a immutable value. "
 )
 
 (? ;"NOTE" ;"First 2 non-blank lines of the file afer the type "
@@ -37,68 +60,62 @@ QUOTE-CHAR = '"'
 	;"it is done in this file."
 )
 
-(? ;" 'typedef' template" ;"typedef ; UNIQUE TYPE ID ; value type 1; "
-	;"value type 2 ; ..."
+(? ;" 'typedef' template" ;"typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
 )
 
 (? ;" 'typedescribe' template" ;"typedescribe ; UNIQUE TYPE ID ; "
 	;"Explaining data types for humans."
+	;"For each data element, explain what that elements meaning for the data."
 )
-
-(? ;"Data that start with TID must have a unique ID."
-	;"For example, all TID.5 data must have IDs unique among themselves."
-	;"TID.6 data can use ID values of TID.5 type data as long as no "
-	;"TID.6 type data ID is the same in TID.6"
-)
-
 
 (? ;"Operations defined by CKAV:"
-	;" ?op.... = operation on data. "
-	;" ?op.num.rt.{deg=X} = Xth degree root operation. Accepts one t.num "
-	;" (?op.num.rt.{deg=2} ; 4) == 2 "
-	;" ?op.num.sqrt = ?op.num.rt.{deg=2} "
-	;" (?op.num.sqrt ; 4) == 2 "
+	;" ?.op.... = operation on data. "
+	;" ?.op.num.root{deg=X} = Xth degree root operation. Accepts one ?.t.num "
+	;" (?.op.num.root{deg=2} ; 4) == 2 "
+	;" ?.op.num.sqrt := ?.op.num.r?.t.{deg=2} "
+	;" (?.op.num.sqrt ; 4) == 2 "
 )
 
 
 (? ;"Definitions by CKAV (reserved types):"
-	;" t.bottom = Has no values. Sub-type of all other types. "
-	;" t.any = Any type except t.bottom "
-	;" t.top = Super-type of all other types. "
+	;" ?.t.bottom = Has no values. Sub-type of all other types. "
+	;" ?.t.any = Any type except ?.t.bottom "
+	;" ?.t.top = Super-type of all other types. "
 	
-	;" t.data = CKAV data. Enclosed with ( )"
+	;" ?.t.data = CKAV data. Enclosed with ( )"
 	
-	;" t.num = Any kind of number "
-	;" t.num.zero = The number 0 "
-	;" t.num.nat = Counting numbers starting from 1 (0 excluded) "
-	;" t.num.prime = A prime number "
-	;" t.num.cpst = A composite number "
-	;" t.num.whole = Set of num.nat joined with t.num.zero "
-	;" t.num.int = t.num.whole set adjoined with their negatives. "
-	;" t.num.ratio = A number which can be written as a fraction. "
-	;" t.num.irrat = A number which can not be written as a fraction. "
-	;" t.num.float = IEEE Standard for Floating-Point Arithmetic (IEEE 754) value "
-	;" t.num.real = t.num.ratio and t.num.irrat sets adjoined. Unlimited version of t.num.float "
-	;" t.num.complex = a+bi where a and b are t.num.real and i = square root of -1 "
+	;" ?.t.num = Any kind of number "
+	;" ?.t.num.zero = The number 0 "
+	;" ?.t.num.nat = Counting numbers starting from 1 (0 excluded) "
+	;" ?.t.num.prime = A prime number "
+	;" ?.t.num.cpst = A composite number "
+	;" ?.t.num.whole = Set of ?.t.num.nat joined with ?.t.num.zero "
+	;" ?.t.num.int = ?.t.num.whole set adjoined with their negatives. "
+	;" ?.t.num.ratio = A number which can be written as a fraction. "
+	;" ?.t.num.irrat = A number which can not be written as a fraction. "
+	;" ?.t.num.float = IEEE Standard for Floating-Point Arithmetic (IEEE 754) value "
+	;" ?.t.num.real = ?.t.num.ratio and ?.t.num.irrat sets adjoined. Unlimited version of ?.t.num.float "
+	;" ?.t.num.complex = a+bi where a and b are ?.t.num.real and i = square root of -1 "
 	
-	;" t.str = Any kind of character sequence. "
-	;" t.str.utf-8 = utf-8 encoded character sequence. "
+	;" ?.t.str = Any kind of character sequence. "
+	;" ?.t.str.utf-8 = utf-8 encoded character sequence. "
 	
-	;" prop.uniq = unique value "
-	;" prop.non-neg = non negative value "
-	;" prop.non-pos = non positive value "
+	;" Properties: "
+	;" ?.prop.uniq = unique value "
+	;" ?.prop.non-neg = non negative value "
+	;" ?.prop.non-pos = non positive value "
 	;""
 )
 
 
 (? ;"Examples of type definitions, example data... can be found below.")
 
-(? ;"User defined type identifiers can be anything except CKAV reserved ones."
+(? ;"User types don't have to start with ?.t."
+	;"User defined type identifiers can be anything except CKAV reserved ones."
 	;"Reserved characters or char sequences can be used if they are quoted."
-	;"User types don't have to start with T."
 )
 
-(typedef ;"?" ;t.num.complex)
+(typedef ;"?" ;?.t.num.complex)
 (typedescribe ;"?" 
 	;"WHAT = Example for how ? can be defined as a type by users."
 		;"It must be quoted for user definitions."
@@ -107,71 +124,83 @@ QUOTE-CHAR = '"'
 ("?" ; "3+4i")
 
 
-(typedef ;TID... ;"Unique ID value" ;...)
-(typedescribe ;TID... 
-	;"WHAT = A t.data with Type and ID."
-		;This ID value can be used in other data in different TID types."
-	;"VALUES = unique ID, other datas."
+(typedef ;TID."user defined type name" ;?.t.any.{?.prop.uniq} ;...)
+
+(typedescribe ;TID."user defined type name"
+	;" WHAT = A ?.t.data with Type and ID. "
+	;" VALUES = unique ID, other datas. "
 )
 
-(typedef ;T.1 
-	;t.num.whole 
-	;t.num.whole 
-	;t.num.whole
+
+(typedef ;t.1
+	;?.t.num.whole 
+	;?.t.num.whole 
+	;?.t.num.whole
 )
 
-(typedescribe ; T.1 ;"3D point x,y,z values.")
+(typedescribe ; t.1
+	;" WHAT = 3D point" 
+	;" VALUES = (x ;y ;z) "
 
-(typedef ;T.2 
-	;t.num.whole 
-	;t.num.whole 
-	;t.num.whole 
-	;t.num.whole
+(t.1 ;3 ; 4; 5)
+
+
+(typedef ;t.2
+	;?.t.num.whole.{?.prop.uniq}
+	;?.t.num.whole 
+	;?.t.num.whole 
+	;?.t.num.whole
 )
 
-(typedescribe ; T.2 
-	;"WHAT = id and 3D point." 
-	;"VALUES = point id, x, y, z values."
+(typedescribe ; t.2 
+	;" WHAT = id and 3D point. " 
+	;" VALUES = (point id ;x ;y ;z) "
 )
+
+(t.2 ;0 ;3 ; 4; 5)
+(t.2 ;1 ;3 ; 100; 5)
+(t.2 ;2 ;3 ; 4; 5)
+
 
 (typedef ;TID.1 
-	;"t.num.whole.{prop.uniq}" 
-	;"t.num.real" 
-	;t.num.real
+	;?.t.num.whole.{?.prop.uniq}
+	;?.t.num.real
+	;?.t.num.real
 )
+
+(TID.1 ;0 ;1 ; 8)
+(TID.1 ;1 ;3 ; 3)
+(TID.1 ;2 ;2 ; 5)
+(TID.1 ;3 ;0 ; 8)
+
 
 (typedescribe ;TID.1 
-	;"WHAT = A 2D point with ID value." 
-	;"VALUES = Unique ID ;X value ;Y value."
+	;" WHAT = A 2D point with ID value. " 
+	;" VALUES = (Unique ID ;x ;y) "
 )
+
 
 (typedef ;TID.2 
-	;str.utf-8.{prop.uniq}
-	;t.num.int.{prop.non-neg} 
-	;t.num.int.{prop.non-pos} 
-	;t.num.zero
+	;?.t.str.utf-8.{?.prop.uniq}
+	;?.t.num.int.t.{?.prop.non-neg} 
+	;?.t.num.int.t.{?.prop.non-pos} 
+	;?.t.num.zero
 )
 
+(TID.2 ;"str ID example 1" ;1 ; -1 ;0)
+(TID.2 ;"str ID example 2" ;5 ; -29 ;0)
+
+
 (typedef ;TID."spaced type example" 
-	;t.num.whole.{prop.uniq} 
-	;t.num.ratio
+	;?.t.num.whole.{?.prop.uniq} 
+	;?.t.num.ratio
 )
 
 (TID."spaced type example" ;3 ; "22/7")
 (TID."spaced type example" ;6 ; 3.14)
 
-(TID.2 ;"str ID example 1" ;1 ; -1 ;0)
-(TID.2 ;"str ID example 2" ;5 ; -29 ;0)
-
-(T.1 ;3 ; 4; 5)
-(T.2 ;0 ;3 ; 4; 5)
 
 (? ;"COMMENT example")
-
-(TID.1 ;0 ;1 ; 1)
-(TID.1 ;1 ;3 ; 3)
-(TID.1 ;2 ;2 ; 5)
-(TID.1 ;3 ;0 ; 8)
 
 
 (? ;"TODO" ;"Define reference system (types...)"
@@ -190,6 +219,11 @@ QUOTE-CHAR = '"'
 (? ;"TODO" ;"Type property specification."
 		;"After choosing a relation of values (a type), a mechanism
 		is needed to denote their extra properties."
-		;"t.num.whole.{prop.uniq} seems ok."
+		;"?.t.num.whole.{?.prop.uniq} seems ok."
 		;"Check RUST Language for inspiration"
+)
+
+(? ;"TODO(armagan)"
+	;" Alias operator := "
+	;" Finish work on aliasing. Might use keyword alias instead of := "
 )
