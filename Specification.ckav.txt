@@ -109,6 +109,7 @@ QUOTE-CHAR = '"'
 	;" ?.t.str = Any kind of character sequence. "
 	;" ?.t.str.utf-8 = utf-8 encoded character sequence. "
 	;" ?.t.str.iso-8601 = iso-8601 date string. "
+	;" ?.t.url = A url (uniform resource locator) string.  As defined in https://www.w3.org/Addressing/URL/url-spec.txt "
 	
 	;" Properties: "
 	;" ?.prop.uniq = unique value "
