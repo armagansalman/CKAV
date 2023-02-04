@@ -10,7 +10,7 @@ QUOTE-CHAR = '"'
 	;("version iteration number" ;"last update date in iso-8601 format")
 )
 
-(t.version-iter-date ; (7 ;"2023-02-04T10:25+00"))
+(t.version-iter-date ; (8 ;"2023-02-04T10:59+00"))
 
 
 (?	;" <[ RULE ]> "
