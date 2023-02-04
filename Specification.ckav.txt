@@ -10,23 +10,36 @@ QUOTE-CHAR = '"'
 	;("version iteration number" ;"last update date in iso-8601 format")
 )
 
-(t.version-iter-date ; (6 ;"2023-02-04T10:04+00"))
+(t.version-iter-date ; (7 ;"2023-02-04T10:25+00"))
 
 
-(? ;"NOTE" ;"First 2 non-blank lines of the file afer the type "
+(?	;" <[ RULE ]> "
+
+	;"First 2 non-blank lines of the file afer the type "
 	;"specifier (MIME) must describe separator-char and quote-char as "
 	;"it is done in this file."
 	;"They can be defined in any order. (SEPARATOR-CHAR first or QUOTE-CHAR first)"
 )
 
-(? ;"? is a system reserved character."
+(?	;" <[ RULE ]> "
+
+	;"? is a system reserved character."
 	;"Users who want to start their ?.typedef, reference, string etc. must"
 	;"quote the string that starts with ? character."
 	;"Any ?.typedef, reference, string... that starts with ? is defined"
 	;"in CKAV specification."
 )
 
-(? ;"A ?.t.list has multiple elements. The first element always denotes "
+(?	;" <[ RULE ]> "
+
+	;"Every data is a ?.t.list except those that start"
+	;"with a QUOTE-CHAR (let's call them X)"
+	;"The type of X is always ?.t.str.utf-8 unless stated otherwise explicitly."
+	
+	;("abcd")
+	;"Above is a ?.t.list value that contains a ?.t.str.utf-8"
+	
+	;"A ?.t.list has multiple elements. The first element always denotes "
 	;"the type of the ?.t.list"
 	;"A ?.t.list is always between ( and ) characters."
 )
@@ -39,7 +52,21 @@ QUOTE-CHAR = '"'
 	;"always denotes the type of that ?.t.list"
 )
 
-(? ;"First data element of every ?.t.list (X) that starts with TID"
+(?	;" <[ RULE ]> "
+
+	;" By default, anything starts with QUOTE-CHAR is processed as a"
+	;" ?.t.str.utf-8 value "
+	;" use another type if you want it to be processed differently. "
+	
+	;" For example, if you want to tell that duckduckgo.com is an url,"
+	;" You must use"
+	;" (?.t.url ; duckduckgo.com) "
+	;" if its type is not specified, it will lose its meaning as an url "
+)
+
+(?	;" <[ RULE ]> "
+
+	;"First data element of every ?.t.list (X) that starts with TID"
 	;"must have a ID field defined which is unique in X."
 	
 	;"For example, all TID.5 data must have IDs unique among themselves."
@@ -47,15 +74,21 @@ QUOTE-CHAR = '"'
 	;"TID.6 type data ID is the same in TID.6"
 )
 
-(? ;"System (CKAV) reserved types and strings always start with ?"
+(?	;" <[ RULE ]> "
+
+	;"System (CKAV) reserved types and strings always start with ?"
 	;" Quote your type and string if they begin with ? "
 )
 
-(? ;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data "
+(?	;" <[ RULE ]> "
+
+	;"SEPARATOR-CHAR and QUOTE-CHAR is used as they are used in csv data "
 	;"format (https://www.ietf.org/rfc/rfc4180.txt)"
 )
 
-(? ;"WARNING" ;"Graph created by type definitions"
+(?	;" <[ RULE ]> "
+
+	;"Graph created by type definitions"
 	;"must not create any cycles."
 	
 	;"For example, the following is forbidden:"
@@ -63,10 +96,12 @@ QUOTE-CHAR = '"'
 	;"?.typedef ; type.2; type.1 ; ?.t.num.real"
 )
 
-(? ;"DEFINITION"
+(?	;"<[ DEFINITION ]>"
+	
 	;" ?.= operator is alias operator "
 	;" It takes two positional arguments. First is a ?.t.str"
-	;" second is a immutable value. "
+	;" second is an immutable value. "
+	;" After this operation, first value can be used instead of the second value. "
 )
 
 (? ;" '?.typedef' template" ;"?.typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
@@ -106,8 +141,8 @@ QUOTE-CHAR = '"'
 	;" ?.t.num.real = ?.t.num.ratio and ?.t.num.irrat sets adjoined. Unlimited version of ?.t.num.float "
 	;" ?.t.num.complex = a+bi where a and b are ?.t.num.real and i = square root of -1 "
 	
-	;" ?.t.str = Any kind of character sequence. "
-	;" ?.t.str.utf-8 = utf-8 encoded character sequence. "
+	;" ?.t.str.{encoding=X} = Any kind of character sequence. Encoded as X. Default encoding is utf-8"
+	;" ?.t.str.utf-8 = ?.t.str.{encoding=utf-8} "
 	;" ?.t.str.iso-8601 = iso-8601 date string. "
 	;" ?.t.url = A url (uniform resource locator) string.  As defined in https://www.w3.org/Addressing/URL/url-spec.txt "
 	
