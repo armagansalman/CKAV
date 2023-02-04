@@ -3,7 +3,21 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(? ;"version" ;"(0.3.1 ;2023-02-04T08:59+00)")
+(?.typedef ;t.version-iter-date
+	;(?.t.num.whole ;?.t.str.iso-8601)
+)
+(?.typedescribe ;t.version-iter-date
+	;("version iteration number" ;"last update date in iso-8601 format")
+)
+
+(t.version-iter-date ; (4 ;"2023-02-04T09:16+00"))
+
+
+(? ;"NOTE" ;"First 2 non-blank lines of the file afer the type "
+	;"specifier (MIME) must describe separator-char and quote-char as "
+	;"it is done in this file."
+	;"They can be defined in any order. (SEPARATOR-CHAR first or QUOTE-CHAR first)"
+)
 
 (? ;"? is a system reserved character."
 	;"Users who want to start their ?.typedef, reference, string etc. must"
@@ -12,25 +26,25 @@ QUOTE-CHAR = '"'
 	;"in CKAV specification."
 )
 
-(? ;"First data element of every ?.t.data (X) that starts with TID"
+(? ;"A ?.t.list has multiple elements. The first element always denotes "
+	;"the type of the ?.t.list"
+	;"A ?.t.list is always between ( and ) characters."
+)
+
+(? ;"An ?.t.list element is always either"
+	;"a simple type defined by CKAV"
+	;"or it is a ?.t.list value."
+	
+	;"The first data element of every ?.t.list"
+	;"always denotes the type of that ?.t.list"
+)
+
+(? ;"First data element of every ?.t.list (X) that starts with TID"
 	;"must have a ID field defined which is unique in X."
 	
 	;"For example, all TID.5 data must have IDs unique among themselves."
 	;"TID.6 data can use ID values of TID.5 type data as long as no "
 	;"TID.6 type data ID is the same in TID.6"
-)
-
-(? ;"A ?.t.data has multiple elements. The first element always denotes "
-	;"the type of the ?.t.data"
-	;"A ?.t.data is always between ( and ) characters."
-)
-
-(? ;"An ?.t.data element is always either"
-	;"a simple type defined by CKAV"
-	;"or it is a ?.t.data value."
-	
-	;"The first data element of every ?.t.data"
-	;"always denotes the type of that ?.t.data"
 )
 
 (? ;"System (CKAV) reserved types and strings always start with ?"
@@ -55,11 +69,6 @@ QUOTE-CHAR = '"'
 	;" second is a immutable value. "
 )
 
-(? ;"NOTE" ;"First 2 non-blank lines of the file afer the type "
-	;"specifier (MIME) must describe separator-char and quote-char as "
-	;"it is done in this file."
-)
-
 (? ;" '?.typedef' template" ;"?.typedef ; UNIQUE TYPE ID ; value type 1; value type 2 ; ..."
 )
 
@@ -82,7 +91,7 @@ QUOTE-CHAR = '"'
 	;" ?.t.any = Any type except ?.t.bottom "
 	;" ?.t.top = Super-type of all other types. "
 	
-	;" ?.t.data = CKAV data. Enclosed with ( )"
+	;" ?.t.list = CKAV data. Enclosed with ( )"
 	
 	;" ?.t.num = Any kind of number "
 	;" ?.t.num.zero = The number 0 "
@@ -99,6 +108,7 @@ QUOTE-CHAR = '"'
 	
 	;" ?.t.str = Any kind of character sequence. "
 	;" ?.t.str.utf-8 = utf-8 encoded character sequence. "
+	;" ?.t.str.iso-8601 = iso-8601 date string. "
 	
 	;" Properties: "
 	;" ?.prop.uniq = unique value "
@@ -127,7 +137,7 @@ QUOTE-CHAR = '"'
 (?.typedef ;TID."user defined type name" ;?.t.any.{?.prop.uniq} ;...)
 
 (?.typedescribe ;TID."user defined type name"
-	;" WHAT = A ?.t.data with Type and ID. "
+	;" WHAT = A ?.t.list with Type and ID. "
 	;" VALUES = unique ID, other datas. "
 )
 
