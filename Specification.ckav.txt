@@ -115,6 +115,16 @@ QUOTE-CHAR = '"'
 	;" ?.prop.uniq = unique value "
 	;" ?.prop.non-neg = non negative value "
 	;" ?.prop.non-pos = non positive value "
+	
+	;" ?.t.digit.{base=X} = A symbol that represents a ?.t.num.whole in base X. One symbol can only represent X different numbers. "
+	;" ?.t.bit = ?.t.digit.{base=2} == One bit. A binary digit. "
+	;" ?.t.byte = ?.t.digit.{base=256} == One byte. Can represent 2^8 different values. (1 byte == 8 bits)"
+	
+	;" ?.t.seq.{digit_base=X ;digit_count=Y} = A positional sequence of ?.t.digit{base=X} values with size Y that represents a numerical value. "
+	;" ?.t.seq.bit = ?.t.seq.{base=2} "
+	;" ?.t.seq.byte = ?.t.seq.{base=256} "
+	
+	
 	;""
 )
 
