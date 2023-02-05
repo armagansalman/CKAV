@@ -10,7 +10,7 @@ QUOTE-CHAR = '"'
 	;("version iteration number" ;"last update date in iso-8601 format")
 )
 
-(t.version-iter-date ; (8 ;"2023-02-04T10:59+00"))
+(t.version-iter-date ; (9 ;"2023-02-05T08:06+00"))
 
 
 (?	;" <[ RULE ]> "
@@ -32,24 +32,24 @@ QUOTE-CHAR = '"'
 
 (?	;" <[ RULE ]> "
 
-	;"Every data is a ?.t.list except those that start"
+	;"Every data is a ?.t.data except those that start"
 	;"with a QUOTE-CHAR (let's call them X)"
 	;"The type of X is always ?.t.str.utf-8 unless stated otherwise explicitly."
 	
 	;("abcd")
-	;"Above is a ?.t.list value that contains a ?.t.str.utf-8"
+	;"Above is a ?.t.data value that contains a ?.t.str.utf-8"
 	
-	;"A ?.t.list has multiple elements. The first element always denotes "
-	;"the type of the ?.t.list"
-	;"A ?.t.list is always between ( and ) characters."
+	;"A ?.t.data has multiple elements. The first element always denotes "
+	;"the type of the ?.t.data"
+	;"A ?.t.data is always between ( and ) characters."
 )
 
-(? ;"An ?.t.list element is always either"
+(? ;"An ?.t.data element is always either"
 	;"a simple type defined by CKAV"
-	;"or it is a ?.t.list value."
+	;"or it is a ?.t.data value."
 	
-	;"The first data element of every ?.t.list"
-	;"always denotes the type of that ?.t.list"
+	;"The first data element of every ?.t.data"
+	;"always denotes the type of that ?.t.data"
 )
 
 (?	;" <[ RULE ]> "
@@ -66,7 +66,7 @@ QUOTE-CHAR = '"'
 
 (?	;" <[ RULE ]> "
 
-	;"First data element of every ?.t.list (X) that starts with TID"
+	;"First data element of every ?.t.data (X) that starts with TID"
 	;"must have a ID field defined which is unique in X."
 	
 	;"For example, all TID.5 data must have IDs unique among themselves."
@@ -126,7 +126,7 @@ QUOTE-CHAR = '"'
 	;" ?.t.any = Any type except ?.t.bottom "
 	;" ?.t.top = Super-type of all other types. "
 	
-	;" ?.t.list = CKAV data. Enclosed with ( )"
+	;" ?.t.data = CKAV data. Enclosed with ( )"
 	
 	;" ?.t.num = Any kind of number "
 	;" ?.t.num.zero = The number 0 "
@@ -185,7 +185,7 @@ QUOTE-CHAR = '"'
 (?.typedef ;TID."user defined type name" ;?.t.any.{?.prop.uniq} ;...)
 
 (?.typedescribe ;TID."user defined type name"
-	;" WHAT = A ?.t.list with Type and ID. "
+	;" WHAT = A ?.t.data with Type and ID. "
 	;" VALUES = unique ID, other datas. "
 )
 
