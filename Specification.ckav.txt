@@ -130,7 +130,11 @@ QUOTE-CHAR = '"'
 	;" ?.t.any = Any type except ?.t.bottom "
 	;" ?.t.top = Super-type of all other types. "
 	
-	;" ?.t.data = CKAV data. Enclosed with ( )"
+	;" ?.t.primitive = A typed value. Don't refer to any other type. Quoted ?.t.primitive datas are utf-8 strings by default if their type is not specified explicitly using ( ) "
+	;" ?.t.data = CKAV data ; Enclosed with ( ) ; Holds at least one ?.t.primitive or ?.t.data values ; Values are separated with SEPARATOR-CHAR "
+	
+	;" ?.t.list = A ?.t.data ; Positional ?.t.data values ; Can mix different types of values. "
+	;" ?.t.array = A ?.t.data ; Positional ?.t.data values ; Forbids different kinds of values. Only one type can be used for its elements. "
 	
 	;" ?.t.num = Any kind of number "
 	;" ?.t.num.zero = The number 0 "
@@ -291,3 +295,11 @@ QUOTE-CHAR = '"'
 	;" Alias operator ?.= "
 	;" Finish work on aliasing. Might use keyword alias instead of ?.= "
 )
+
+(? ;"TODO(armagan)"
+	;" ?.t.tuple type "
+	;" Finish. Is it necessary? Is ?.t.list for different typed values and"
+	;" ?.t.array for same typed values enough? "
+	;" ?.t.tuple = A ?.t.data ; Positional ?.t.data values of any type. Doesn't allow:  add to, remove from or change the tuple. "
+)
+
