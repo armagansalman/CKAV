@@ -145,6 +145,7 @@ QUOTE-CHAR = '"'
 	;" ?.t.num.real = ?.t.num.ratio and ?.t.num.irrat sets adjoined. Unlimited version of ?.t.num.float "
 	;" ?.t.num.complex = a+bi where a and b are ?.t.num.real and i = square root of -1 "
 	
+	;" By default, quoted strings are processed as utf-8 strings. Use ?.t.str.{encoding=utf-16} type or a custom type to process your string differently. "
 	;" ?.t.str.{encoding=X} = Any kind of character sequence. Encoded as X. Default encoding is utf-8"
 	;" ?.t.str.utf-8 = ?.t.str.{encoding=utf-8} "
 	;" ?.t.str.iso-8601 = iso-8601 date string. "
