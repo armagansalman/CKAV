@@ -3,7 +3,7 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(? ;" CKAV VERSION " ;(?.t.semver-date ;"0.3.0" ;"2023-02-06T16:41+00")
+(? ;" CKAV VERSION " ;(?.t.semver-date ;"0.3.0" ;"2023-04-11")
 )
 
 
@@ -132,7 +132,7 @@ QUOTE-CHAR = '"'
         Quoted primitive datas are utf-8 strings by default unless 
         their encoding is not specified explicitly using ( ) "
     ;" compound type = Can be constructed by primitive datas and compound datas. "
-    ;" ?.t.data = Contains element(s) (primitive or compound) ; Elements are seperated by SEPARATOR-CHAR ; Starts with ( ends with ) ; first element always denotes the type of that particular data"
+    ;" ?.t.data = Contains typed element(s) (primitive or compound) ; Elements are seperated by SEPARATOR-CHAR ; Starts with ( ends with ) ; first element always denotes the type of that particular data"
 	;" ?.t.list = A ?.t.data ; Can contain different types of values. ; Can contain duplicates"
 	;" ?.t.set = ?.t.list ; Can NOT contain duplicate elements"
 	;" ?.t.tuple = A ?.t.list ; Positional ?.t.data values "
