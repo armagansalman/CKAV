@@ -3,7 +3,7 @@ text/ckav; charset=UTF-8
 SEPARATOR-CHAR = ';'
 QUOTE-CHAR = '"'
 
-(? ;" CKAV VERSION " ;(?.t.semver-date ;"0.2.1" ;"2023-02-06T16:41+00")
+(? ;" CKAV VERSION " ;(?.t.semver-date ;"0.3.0" ;"2023-02-06T16:41+00")
 )
 
 
@@ -19,10 +19,10 @@ QUOTE-CHAR = '"'
 
 (?	;" <[ RULE ]> "
 
-	;"First 2 non-blank lines of the file afer the type "
-	;"specifier (MIME) must describe separator-char and quote-char as "
-	;"it is done in this file."
+	;"First 2 non-blank lines of the file afer the type specifier (MIME) "
+	;"must describe separator-char and quote-char as it is done in this file."
 	;"They can be defined in any order. (SEPARATOR-CHAR first or QUOTE-CHAR first)"
+    ;"İf ' needs to be used, it should be quoted as it is defined by CSV format."
 )
 
 (?	;" <[ RULE ]> "
@@ -48,9 +48,11 @@ QUOTE-CHAR = '"'
 	;"A ?.t.data is always between ( and ) characters."
 )
 
-(? ;"An ?.t.data element is always either"
-	;"a simple type defined by CKAV"
-	;"or it is a ?.t.data value."
+(?  ;" <[ RULE ]> "
+
+    ;"An ?.t.data element is always either"
+	;"a primitive type defined by CKAV"
+	;"or it is a combination of primitive types and ?.t.data values."
 	
 	;"The first data element of every ?.t.data"
 	;"always denotes the type of that ?.t.data"
@@ -126,23 +128,27 @@ QUOTE-CHAR = '"'
 
 
 (? ;"Definitions by CKAV (reserved types):"
-	;" ?.t.bottom = Has no values. Sub-type of all other types. "
+	;" primitive type = An irreducible typed value defined by CKAV, not by user ;
+        Quoted primitive datas are utf-8 strings by default unless 
+        their encoding is not specified explicitly using ( ) "
+    ;" compound type = Can be constructed by primitive datas and compound datas. "
+    ;" ?.t.data = Contains element(s) (primitive or compound) ; Elements are seperated by SEPARATOR-CHAR ; Starts with ( ends with ) ; first element always denotes the type of that particular data"
+	;" ?.t.list = A ?.t.data ; Can contain different types of values. ; Can contain duplicates"
+	;" ?.t.set = ?.t.list ; Can NOT contain duplicate elements"
+	;" ?.t.tuple = A ?.t.list ; Positional ?.t.data values "
+    ;" ?.t.array = A ?.t.tuple ; Forbids different kinds of values. Only one type can be used for its elements. "
+	
+    ;" ?.t.bottom = Has no values. Sub-type of all other types. "
 	;" ?.t.any = Any type except ?.t.bottom "
 	;" ?.t.top = Super-type of all other types. "
 	
-	;" ?.t.primitive = A typed value. Don't refer to any other type. Quoted ?.t.primitive datas are utf-8 strings by default if their type is not specified explicitly using ( ) "
-	;" ?.t.data = CKAV data ; Enclosed with ( ) ; Holds at least one ?.t.primitive or ?.t.data values ; Values are separated with SEPARATOR-CHAR "
-	
-	;" ?.t.list = A ?.t.data ; Positional ?.t.data values ; Can mix different types of values. "
-	;" ?.t.array = A ?.t.data ; Positional ?.t.data values ; Forbids different kinds of values. Only one type can be used for its elements. "
-	
 	;" ?.t.num = Any kind of number "
-	;" ?.t.num.zero = The number 0 "
+	;" ?.t.num.zero = The number 0 ; Represented as (?.num.zero)"
 	;" ?.t.num.nat = Counting numbers starting from 1 (0 excluded) "
-	;" ?.t.num.prime = A prime number "
-	;" ?.t.num.cpst = A composite number "
-	;" ?.t.num.whole = Set of ?.t.num.nat joined with ?.t.num.zero "
+	;" ?.t.num.whole = Set of ?.t.num.nat joined with ?.t.num.zero "    
 	;" ?.t.num.int = ?.t.num.whole set adjoined with their negatives. "
+	;" ?.t.num.cpst = A composite number "
+	;" ?.t.num.prime = A prime number "
 	;" ?.t.num.ratio = A number which can be written as a fraction. "
 	;" ?.t.num.irrat = A number which can not be written as a fraction. "
 	;" ?.t.num.float = IEEE Standard for Floating-Point Arithmetic (IEEE 754) value "
